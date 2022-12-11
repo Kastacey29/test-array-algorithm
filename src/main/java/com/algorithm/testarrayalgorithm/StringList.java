@@ -1,6 +1,7 @@
 package com.algorithm.testarrayalgorithm;
 
 public interface StringList {
+
     // Добавление элемента.
     // Вернуть добавленный элемент
     // в качестве результата выполнения.
@@ -59,7 +60,7 @@ public interface StringList {
     // Сравнить текущий список с другим.
     // Вернуть true/false или исключение,
     // если передан null.
-    boolean equals(StringList otherList);
+    boolean equals(String[] otherList);
 
     // Вернуть фактическое количество элементов.
     int size();
