@@ -269,4 +269,5 @@ class IntegerAlgorithmTest {
     void checkItem() {
         Assertions.assertThrows(NullElementException.class, () -> actual.checkItem(null));
     }
+
 }

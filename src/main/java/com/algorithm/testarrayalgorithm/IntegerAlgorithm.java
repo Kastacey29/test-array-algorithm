@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class IntegerAlgorithm implements IntegerList {
-    private final Integer[] integers;
+    private Integer[] integers;
     private int size;
 
     public IntegerAlgorithm() {
@@ -20,7 +20,7 @@ public class IntegerAlgorithm implements IntegerList {
     public Integer add(Integer item) {
         checkItem(item);
         if (size == integers.length) {
-            throw new ValidSizeException("Нет места!");
+            grow();
         }
         integers[size] = item;
         size++;
@@ -31,7 +31,7 @@ public class IntegerAlgorithm implements IntegerList {
     public Integer add(int index, Integer item) {
         checkItem(item);
         if (size == integers.length) {
-            throw new ValidSizeException("Нет места!");
+            grow();
         }
         if (index > size || index < 0) {
             throw new NullIndexException("Введите корректный индекс!");
@@ -204,6 +204,31 @@ public class IntegerAlgorithm implements IntegerList {
         }
     }
 
+    public static void quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private static int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
     public static void sortInsertion(Integer[] arr) {
         for (int i = 1; i < arr.length; i++) {
             int temp = arr[i];
@@ -222,8 +247,12 @@ public class IntegerAlgorithm implements IntegerList {
     }
 
     private static int binarySearch(Integer[] integers, Integer item) {
-        IntegerAlgorithm.sortInsertion(integers);
+        IntegerAlgorithm.quickSort(integers,0,integers.length-1);
         return Arrays.binarySearch(integers,item);
+    }
+
+    private void grow() {
+        integers = Arrays.copyOf(integers,size+size/2);
     }
 
     public static void main(String[] args) {
